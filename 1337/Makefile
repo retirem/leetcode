@@ -1,6 +1,6 @@
 CXX = g++
 
-CXXFLAGS = -g -Wall
+CXXFLAGS = -g -Wall -std=c++20
 
 TARGET = program
 
