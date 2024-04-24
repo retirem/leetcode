@@ -1,6 +1,6 @@
 CXX = g++
 
-CXXFLAGS = -g -Wall
+CXXFLAGS = -g -Wall -std=c++20
 
 TARGET = program
 
@@ -9,7 +9,7 @@ RM = rm -rf
 all: clean $(TARGET) run
 
 $(TARGET): $(TARGET).cpp
-	$(CXX) $(CFLAGS) -o $(TARGET) $(TARGET).cpp
+	$(CXX) $(CXXFLAGS) -o $(TARGET) $(TARGET).cpp
 
 run:
 	./$(TARGET)
