@@ -4,22 +4,29 @@
 class Solution {
 public:
     int minFallingPathSum(std::vector<std::vector<int>>& grid) {
-        int sum = 0;
-
-        for (auto element = grid.begin(); element != grid.end(); ++element){
-            int current_sum = subMinFallingPathSum(grid, element);
-            if (current_sum < sum) sum = current_sum;
-        }
-
-        /**
-         * @brief IDEA: to do recursion, by selection each element in a row, and compare sums at each recursion return
-         * 
-         */
-
+        return subMinFallingPathSum(0, grid);
     }
 
-    int subMinFallingPathSum(std::vector<std::vector<int>>& grid, std::vector<int>::iterator element){
+    int subMinFallingPathSum(size_t currently_taken_index, std::vector<std::vector<int>>& grid){
+        std::vector<int> first_row = grid[0];
+        int smallest = first_row[0];
+        size_t new_index = 0;
 
+        for (size_t i = 0; i < first_row.size(); ++i) {
+            if (i != currently_taken_index) {
+                if (first_row[i] < smallest) {
+                    smallest = first_row[i];
+                    new_index = i;
+                }
+            }
+        }
+
+        if (grid.size() == 1) return smallest;
+
+        std::vector<std::vector<int>>& new_grid = grid;
+        new_grid.erase(new_grid.begin());
+
+        return smallest + subMinFallingPathSum(new_index, new_grid);
     }
 };
 
