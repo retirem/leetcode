@@ -7,37 +7,36 @@ public:
         return subMinFallingPathSum(0, grid, true);
     }
 
-    int subMinFallingPathSum(size_t last_smallest_index, std::vector<std::vector<int>>& grid, bool is_first_row){
+    int subMinFallingPathSum(size_t last_smallest_index, std::vector<std::vector<int>> grid, bool is_first_row){
         if (grid.size() == 0) return 0;
-
+        
         std::vector<int> first_row = grid[0];
-        int smallest = first_row[0];
-        size_t current_smallest_index = 0;
+        grid.erase(grid.begin());
+
+        int smallest_sum = INT_MAX;
 
         for (size_t i = 0; i < first_row.size(); ++i) {
             if (is_first_row) {
-                if (first_row[i] < smallest) {
-                    smallest = first_row[i];
-                    current_smallest_index = i;
+                int sum = first_row[i] + subMinFallingPathSum(i, grid, false);
+                if (sum < smallest_sum) {
+                    smallest_sum = sum;
                 }
-            } else {
+            }else {
                 if (i != last_smallest_index) {
-                    if (first_row[i] < smallest) {
-                        smallest = first_row[i];
-                        current_smallest_index = i;
+                    int sum = first_row[i] + subMinFallingPathSum(i, grid, false);
+                    if (sum < smallest_sum) {
+                        smallest_sum = sum;
                     }
-                    // DOES NOT WORK? WHAT IF THERE ARE MORE SAME SIZE SMALLEST ONES???!
                 }
             }
         }
 
-        grid.erase(grid.begin());
-        return smallest + subMinFallingPathSum(current_smallest_index, grid, false);
+        return smallest_sum;
     }
 };
 
 int main(){
-    std::vector<std::vector<int>> grid{ std::vector<int>{ 1,2,3 }, std::vector<int>{ 4,5,6 }, std::vector<int>{ 7,8,9 }};
+    std::vector<std::vector<int>> grid{ std::vector<int>{ -37,51,-36,34,-22 }, std::vector<int>{ 82,4,30,14,38 }, std::vector<int>{ -68,-52,-92,65,-85 }, std::vector<int>{ -49,-3,-77,8,-19 }, std::vector<int>{ -60,-71,-21,-62,-73 }};
 
     Solution s;
     std::cout << "Solution: " << s.minFallingPathSum(grid) << std::endl;
