@@ -4,7 +4,18 @@
 class Solution {
 public:
     int minFallingPathSum(std::vector<std::vector<int>>& grid) {
-        return subMinFallingPathSum(0, grid);
+        std::vector<int> first_row = grid[0];
+        int smallest = first_row[0];
+        size_t smallest_index = 0;
+
+        for (size_t i = 0; i < first_row.size(); ++i) {
+            if (first_row[i] < smallest) {
+                smallest = first_row[i];
+                smallest_index = i;
+            }
+        }
+
+        return smallest + subMinFallingPathSum(smallest_index, grid);
     }
 
     int subMinFallingPathSum(size_t currently_taken_index, std::vector<std::vector<int>>& grid){
