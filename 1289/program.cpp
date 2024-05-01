@@ -22,7 +22,7 @@ public:
 
     int subMinFallingPathSum(size_t last_smallest_index, std::vector<std::vector<int>> grid){
         if (grid.size() == 0) return 0;
-        
+
         std::vector<int> first_row = grid[0];
         grid.erase(grid.begin());
 
